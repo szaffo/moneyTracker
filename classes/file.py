@@ -10,7 +10,16 @@ class File:
 		while [] in self.data:
 			self.data.remove([])
 
+	def headerToString(self):
+		return ','.join(self.header)
+
+	def dataToString(self):
+		return '\n'.join([','.join(x) for x in self.data])
+
 	def close(self):
+		self.io.openToRead()
+		self.io.write(self.headerToString()+'\n')
+		self.io.write(self.dataToString())
 		self.io.close()
 
 if __name__=="__main__":
