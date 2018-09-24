@@ -2,10 +2,20 @@
 
 import commands
 import classes
+import config
 
 COMMAND_LIST = {
 	"help": commands.helper
 }
+
+FILE = None
+
+def init():
+	global FILE
+	FILE = classes.file.File(config.DEFAULT_FILE_PATH)
+
+def destruct():
+	FILE.close()
 
 def main():
 	exit = False;
@@ -26,5 +36,7 @@ def main():
 
 if __name__=="__main__":
 	print("Money Tracker [v 0.1]")
+	init()
 	main()
+	destruct()
 	print("STOP")
