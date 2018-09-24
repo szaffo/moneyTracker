@@ -23,19 +23,19 @@ def main():
 	while not exit:
 		userInput = input(prompt).lower().split(' ')
 		command = userInput.pop(0)
-		args = userInput
+		args = tuple(userInput)
 
 		if command == "exit":
 			exit = True
 		elif command in COMMAND_LIST:
-			COMMAND_LIST[command]()
+			COMMAND_LIST[command](args)
 		else:
 			commands.unknown()
 
 	return 0
 
 if __name__=="__main__":
-	print("Money Tracker [v 0.1]")
+	print("Money Tracker [v 0.2]")
 	init()
 	main()
 	destruct()
