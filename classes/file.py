@@ -1,4 +1,4 @@
-import fileiohandler
+from classes import fileiohandler
 
 class File:
 	def __init__(self,path):

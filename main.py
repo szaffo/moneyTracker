@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import commands
+import classes
 
 COMMAND_LIST = {
 	"help": commands.helper
