@@ -5,37 +5,44 @@ import classes
 import config
 
 COMMAND_LIST = {
-	"help": commands.helper
+	"help": commands.helper,
+	"ac": commands.addColumn,
+	"lc": commands.listColumns,
+	"rc": commands.removeColumn
 }
+
 
 FILE = None
 
+GLOBALS = {
+	"FILE": FILE
+}
+
 def init():
-	global FILE
-	FILE = classes.file.File(config.DEFAULT_FILE_PATH)
+	global GLOBALS
+	GLOBALS["FILE"] = classes.file.File(config.DEFAULT_FILE_PATH)
 
 def destruct():
-	FILE.close()
+	GLOBALS["FILE"].close()
 
 def main():
 	exit = False;
 	prompt = "\n$> "
 	while not exit:
-		userInput = input(prompt).lower().split(' ')
+		userInput = input(prompt).lower().strip().split(' ')
 		command = userInput.pop(0)
 		args = tuple(userInput)
 
 		if command == "exit":
 			exit = True
 		elif command in COMMAND_LIST:
-			COMMAND_LIST[command](args)
+			COMMAND_LIST[command](GLOBALS,args)
 		else:
-			commands.unknown()
-
+			commands.unknown(GLOBALS)
 	return 0
 
 if __name__=="__main__":
-	print("Money Tracker [v 0.2]")
+	print("Money Tracker [v0.2]")
 	init()
 	main()
 	destruct()

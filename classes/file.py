@@ -22,6 +22,33 @@ class File:
 		self.io.write(self.dataToString())
 		self.io.close()
 
+	def listColumns(self):
+		return ", ".join(self.header)
+
+	def addColumn(self, name, defValue):
+		if (name in self.header) or (name == ''):
+			return False
+
+		self.header.append(name)
+
+		if defValue == '':
+			defValue = '-'
+		for record in self.data:
+			record.append(defValue)
+
+		return True
+
+	def removeColumn(self,name):
+		try:
+			num = self.header.index(name)
+		except:
+			return False
+		self.header.pop(num)
+		for record in self.data:
+			#record.pop(num)
+			pass
+		return True
+
 if __name__=="__main__":
 	f = File("../data/test.csv")
 	f.close()
