@@ -41,5 +41,34 @@ def removeColumn(globals,args=('',)):
 	if not globals["FILE"].removeColumn(name):
 		print("No column found")
 
+
+def listRows(globals, *args):
+	try:
+		frm = args[0]
+	except:
+		frm = input("From: ")
+
+	try:
+		to = args[1]
+	except:
+		to = input("To: ")
+
+	globals["FILE"].listRows(frm,to)
+
+
+def evil(globals,*args):
+	try:
+		toev = args[0]
+	except:
+		toev = input(">>> ")
+
+	while toev != 'stop':
+		try:
+			print(eval(toev))
+		except Exception as e:
+			print(e)
+		toev = input(">>> ")
+
+
 if __name__=="__main__":
 	helper()

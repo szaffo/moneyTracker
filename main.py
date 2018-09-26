@@ -6,9 +6,11 @@ import config
 
 COMMAND_LIST = {
 	"help": commands.helper,
+	"eval": commands.evil,
 	"ac": commands.addColumn,
 	"lc": commands.listColumns,
-	"rc": commands.removeColumn
+	"rc": commands.removeColumn,
+	"lr": commands.listRows,
 }
 
 

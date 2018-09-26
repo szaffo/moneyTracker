@@ -7,17 +7,22 @@ class FileIOHandler:
 
 	def changeDirection(self):
 		if self.direction == "IN":
-			sef.direction = "OUT"
+			self.direction = "OUT"
 			self.stream.close()
 			self.stream = open(self.path,'w')
 		elif self.direction == "OUT":
 			self.direction = "IN"
 			self.stream.close()
-			self.stream = open(self.path,'w')
+			self.stream = open(self.path,'r')
 
 	def openToWrite(self):
 		if self.direction != "OUT":
 			self.changeDirection()
+
+	def openToWriteDirect(self):
+		#for debug
+		self.stream.close()
+		self.stream = open(self.path,"w")
 
 	def openToRead(self):
 		if self.direction != "IN":
@@ -30,8 +35,11 @@ class FileIOHandler:
 			return ""
 
 	def write(self,data):
+		#print("in write")
 		if self.direction == "OUT":
 			self.stream.write(data)
+			#self.close()
+			#print("data written")
 			return data
 		else:
 			return ""
