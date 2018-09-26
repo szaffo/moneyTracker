@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/sudo python3
 
 import commands
 import classes
