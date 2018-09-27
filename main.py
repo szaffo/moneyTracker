@@ -1,4 +1,4 @@
-#!/usr/bin/sudo python3
+#!/usr/bin/python3
 
 import commands
 import classes
@@ -11,6 +11,7 @@ COMMAND_LIST = {
 	"lc": commands.listColumns,
 	"rc": commands.removeColumn,
 	"lr": commands.listRows,
+	"ar": commands.addRow
 }
 
 

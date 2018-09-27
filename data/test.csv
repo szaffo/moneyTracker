@@ -1,2 +1,3 @@
-id,Namelkdjakfjdkfj,Price
-0,ASD,1500
+id,Name,Price,Blokk_id,date
+0,ASD,1500,0,2018.09.27
+1,Testing,200,0,2018.09.27

@@ -79,10 +79,18 @@ class File:
 			data.append(record)
 
 
-		print('data',data)
+		# print('data',data)
 
 		printTable.print_table(data, header=self.header, wrap=True, max_col_width=20, wrap_style='wrap',
-            row_line=True, fix_col_width=True)
+            row_line=True, fix_col_width=False, extender_spaces=3, extender_string=' ')
+
+	def addRow(self,parameters):
+		self.data.append(parameters)
+		num = len(self.data)-1
+		self.listRows(num,num)
+
+	def size(self):
+		return len(self.data)
 
 if __name__=="__main__":
 	f = File("../data/test.csv")

@@ -1,6 +1,6 @@
 #from GitHub: https://gist.github.com/jhcepas/5884168 (2018)
 
-def print_table(items, header=None, wrap=True, max_col_width=20, wrap_style="wrap", row_line=False, fix_col_width=False):
+def print_table(items, header=None, wrap=True, max_col_width=20, wrap_style="wrap", row_line=False, fix_col_width=False, extender_spaces=0, extender_string=' '):
     ''' Prints a matrix of data as a human readable table. Matrix
     should be a list of lists containing any type of values that can
     be converted into text strings.
@@ -24,6 +24,7 @@ def print_table(items, header=None, wrap=True, max_col_width=20, wrap_style="wra
     else:
         c2maxw = dict([(i, min(max_col_width, max([len(str(e[i])) for e in items])))
                         for i in range(len(items[0]))])
+
     if header:
         current_item = -1
         row = header
@@ -32,9 +33,16 @@ def print_table(items, header=None, wrap=True, max_col_width=20, wrap_style="wra
                 c2maxw[col] = max(maxw, len(header[col]))
                 if wrap:
                     c2maxw[col] = min(c2maxw[col], max_col_width)
+
     else:
         current_item = 0
         row = items[current_item]
+
+    # print(c2maxw)
+    if not fix_col_width:
+    	for i,element in c2maxw.items():
+    		c2maxw[i] += extender_spaces
+
     while row:
         is_extra = False
         values = []
@@ -58,10 +66,20 @@ def print_table(items, header=None, wrap=True, max_col_width=20, wrap_style="wra
                     val = val[:wrap_width]
             val = val.ljust(cwidth)
             values.append(val)
-        print(' | '.join(values))
+       
+        # if not fix_col_width:
+        # 	for value in values:
+        # 		num = len(value)+extender_spaces
+        # 		# print(num)
+        # 		value = value.rjust(num,extender_string)
+        # print(values)
+        print("  "+' | '.join(values))
+        
+
+
         if not set(extra_line) - set(['']):
             if header and current_item == -1:
-                print( ' | '.join(['='*c2maxw[col] for col in range(len(row)) ]))
+                print("  "+' | '.join(['='*c2maxw[col] for col in range(len(row)) ]))
             current_item += 1
             try:
                 row = items[current_item]
@@ -73,9 +91,9 @@ def print_table(items, header=None, wrap=True, max_col_width=20, wrap_style="wra
  
         if row_line and not is_extra and not (header and current_item == 0):
             if row:
-                print(' | '.join(['-'*c2maxw[col] for col in range(len(row)) ]))
+                print("  "+' | '.join(['-'*c2maxw[col] for col in range(len(row)) ]))
             else:
-                print(' | '.join(['='*c2maxw[col] for col in range(len(extra_line)) ]))
+                print("  "+' | '.join(['='*c2maxw[col] for col in range(len(extra_line)) ]))
 
                 
 if __name__=="__main__":

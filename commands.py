@@ -43,6 +43,14 @@ def removeColumn(globals,args=('',)):
 
 
 def listRows(globals, args=('',)):
+	if args[0] == '-a':
+		globals["FILE"].listRows(1,globals["FILE"].size())
+		return None
+
+	if args[0] == '-s':
+		print("Size of database:",globals["FILE"].size())
+		return None
+
 	try:
 		frm = args[0]
 	except:
@@ -71,6 +79,19 @@ def evil(globals,args=('',)):
 		except Exception as e:
 			print(e)
 		toev = input(">>> ")
+
+def addRow(globals,args=('', )):
+	args = list(args)
+	headers = globals["FILE"].header.copy()
+	parameters = []
+	for element in headers:
+		try:
+			parameters.append(args[0])
+			args.pop(0)
+		except:
+			parameters.append(input("{}: ".format(element)))
+
+	globals["FILE"].addRow(parameters)
 
 
 if __name__=="__main__":
