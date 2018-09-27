@@ -42,7 +42,7 @@ def removeColumn(globals,args=('',)):
 		print("No column found")
 
 
-def listRows(globals, *args):
+def listRows(globals, args=('',)):
 	try:
 		frm = args[0]
 	except:
@@ -53,10 +53,13 @@ def listRows(globals, *args):
 	except:
 		to = input("To: ")
 
-	globals["FILE"].listRows(frm,to)
+	if globals["FILE"].listRows(frm,to) == 1:
+		print("Range Error")
 
 
-def evil(globals,*args):
+def evil(globals,args=('',)):
+	f = globals["FILE"]
+
 	try:
 		toev = args[0]
 	except:

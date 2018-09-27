@@ -31,7 +31,7 @@ def main():
 	exit = False;
 	prompt = "\n$> "
 	while not exit:
-		userInput = input(prompt).lower().strip().split(' ')
+		userInput = input(prompt).strip().split(' ')
 		command = userInput.pop(0)
 		args = tuple(userInput)
 

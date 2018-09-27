@@ -1,4 +1,5 @@
 from classes import fileiohandler
+from classes import printTable
 
 class File:
 	def __init__(self,path):
@@ -12,6 +13,7 @@ class File:
 		self.header = self.data.pop(0)
 		self.header = self.header.split(',')
 		self.data = [x.split(',') for x in self.data]
+
 
 
 	def headerToString(self):
@@ -59,8 +61,28 @@ class File:
 		self.save()
 		return True
 
+	def headerToPrint(self,header):
+		return '\t'.join(header)
+
+	def recordToPrint(self,record):
+		return '\t'.join(record)
+
 	def listRows(self, frm, to):
-		pass
+		num = len(self.data)
+		frm = int(frm)
+		to = int(to)
+		if frm > num or to > num or frm > to:
+			return 1
+
+		data  = list()
+		for record in self.data[frm-1:to]:
+			data.append(record)
+
+
+		print('data',data)
+
+		printTable.print_table(data, header=self.header, wrap=True, max_col_width=20, wrap_style='wrap',
+            row_line=True, fix_col_width=True)
 
 if __name__=="__main__":
 	f = File("../data/test.csv")
