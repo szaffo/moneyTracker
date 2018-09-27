@@ -5,10 +5,14 @@ class File:
 		self.io = fileiohandler.FileIOHandler(path)
 		self.io.openToRead()
 		self.data = self.io.read()
-		self.header =self.data.split('\n').pop(0).split(',')
-		self.data = [x.split(",") for x in self.data.split("\n")]
-		while [] in self.data:
-			self.data.remove([])
+		self.data = self.data.split('\n')
+		while '' in self.data:
+			self.data.remove('')
+		# print(self.data)
+		self.header = self.data.pop(0)
+		self.header = self.header.split(',')
+		self.data = [x.split(',') for x in self.data]
+
 
 	def headerToString(self):
 		return ','.join(self.header)
@@ -18,8 +22,9 @@ class File:
 
 	def save(self):
 		self.io.openToWrite()
-		out = self.io.write(self.headerToString()+'\n')
-		out += self.io.write(self.dataToString())
+		toPrint = self.headerToString()+'\n'+self.dataToString()+'\n'
+		# print(toPrint)
+		out = self.io.write(toPrint)
 		print("{} bytes was written.".format(len(out))) 
 
 	def close(self):
@@ -50,8 +55,7 @@ class File:
 			return False
 		self.header.pop(num)
 		for record in self.data:
-			#record.pop(num)
-			pass
+			record.pop(num)
 		self.save()
 		return True
 

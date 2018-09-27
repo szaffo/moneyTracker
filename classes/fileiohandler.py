@@ -5,6 +5,11 @@ class FileIOHandler:
 		self.stream = open(self.path,'r')
 		self.direction = "IN"
 
+	def save(self):
+		self.direction = "IN"
+		self.stream.close()
+		self.stream = open(self.path,"r")
+
 	def changeDirection(self):
 		if self.direction == "IN":
 			self.direction = "OUT"
@@ -38,6 +43,7 @@ class FileIOHandler:
 		#print("in write")
 		if self.direction == "OUT":
 			self.stream.write(data)
+			self.save()
 			#self.close()
 			#print("data written")
 			return data
