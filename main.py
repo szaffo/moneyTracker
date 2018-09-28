@@ -11,7 +11,8 @@ COMMAND_LIST = {
 	"lc": commands.listColumns,
 	"rc": commands.removeColumn,
 	"lr": commands.listRows,
-	"ar": commands.addRow
+	"ar": commands.addRow,
+	"rr": commands.removeRow
 }
 
 

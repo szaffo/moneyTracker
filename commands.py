@@ -29,7 +29,7 @@ def addColumn(globals,args=('',)):
 
 	rV = globals["FILE"].addColumn(name,defValue)
 
-	if not rV:
+	if 1 == rV:
 		print("Can't add this column")
 
 def removeColumn(globals,args=('',)):
@@ -38,26 +38,30 @@ def removeColumn(globals,args=('',)):
 	except:
 		name = input("Name: ")
 
-	if not globals["FILE"].removeColumn(name):
-		print("No column found")
+	if 1 == globals["FILE"].removeColumn(name):
+		print("Column not found")
 
 
 def listRows(globals, args=('',)):
-	if args[0] == '-a':
-		globals["FILE"].listRows(1,globals["FILE"].size())
-		return None
+	# print(args)
+	try:
+		if args[0] == '-a':
+			globals["FILE"].listRows(1,globals["FILE"].size())
+			return None
 
-	if args[0] == '-s':
-		print("Size of database:",globals["FILE"].size())
-		return None
+		if args[0] == '-s':
+			print("Size of database:",globals["FILE"].size())
+			return None
+	except:
+		pass
 
 	try:
-		frm = args[0]
+		frm = int(args[0])
 	except:
 		frm = input("From: ")
 
 	try:
-		to = args[1]
+		to = int(args[1])
 	except:
 		to = input("To: ")
 
@@ -84,6 +88,8 @@ def addRow(globals,args=('', )):
 	args = list(args)
 	headers = globals["FILE"].header.copy()
 	parameters = []
+	id = headers.pop(0)
+	parameters.append(globals["FILE"].nextID())
 	for element in headers:
 		try:
 			parameters.append(args[0])
@@ -92,6 +98,23 @@ def addRow(globals,args=('', )):
 			parameters.append(input("{}: ".format(element)))
 
 	globals["FILE"].addRow(parameters)
+
+
+def removeRow(globals,args=('',)):
+	try:
+		id = args[0]
+	except:
+		id = input("id: ")
+		
+	try:
+		to = args[1]
+	except:
+		to = id
+
+	for x in range(int(id),int(to)+1):	
+		if 1 == globals["FILE"].removeRow(str(x)):
+			print("No matching")
+
 
 
 if __name__=="__main__":
