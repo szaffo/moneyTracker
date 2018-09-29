@@ -116,6 +116,32 @@ def removeRow(globals,args=('',)):
 			print("No matching")
 
 
+def reNameColumn(globals,args=('',)):
+	try:
+		old = args[0]
+	except:
+		old = input("Old name: ")
+
+	try:
+		new = args[1]
+	except:
+		new = input("New name: ")
+
+
+	globals["FILE"].reNameColumn(old,new)
+
+def open(globals,args=('',)):
+	try:
+		file = args[0]
+	except:
+		file = input("File: ")
+
+	try:
+		globals["FILE"].openFile(file)
+	except:
+		print("Can't open file")
+
+
 
 if __name__=="__main__":
 	helper()

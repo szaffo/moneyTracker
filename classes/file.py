@@ -1,56 +1,36 @@
 from classes import fileiohandler
 from classes import printTable
-
-def bytes_2_human_readable(number_of_bytes):
-	# This function comes from StackOverflow
-	# https://stackoverflow.com/questions/12523586/python-format-size-application-converting-b-to-kb-mb-gb-tb/37423778 (2018)
-    if number_of_bytes < 0:
-        raise ValueError("!!! number_of_bytes can't be smaller than 0 !!!")
-
-    step_to_greater_unit = 1024.
-
-    number_of_bytes = float(number_of_bytes)
-    unit = 'bytes'
-
-    if (number_of_bytes / step_to_greater_unit) >= 1:
-        number_of_bytes /= step_to_greater_unit
-        unit = 'KB'
-
-    if (number_of_bytes / step_to_greater_unit) >= 1:
-        number_of_bytes /= step_to_greater_unit
-        unit = 'MB'
-
-    if (number_of_bytes / step_to_greater_unit) >= 1:
-        number_of_bytes /= step_to_greater_unit
-        unit = 'GB'
-
-    if (number_of_bytes / step_to_greater_unit) >= 1:
-        number_of_bytes /= step_to_greater_unit
-        unit = 'TB'
-
-    precision = 1
-    number_of_bytes = round(number_of_bytes, precision)
-
-    return str(number_of_bytes) + ' ' + unit
+from classes import dataToHumanReadable
 
 class File:
-	def __init__(self,path):
+
+	def openFile(self,path):
 		self.io = fileiohandler.FileIOHandler(path)
 		self.io.openToRead()
-		self.data = self.io.read().strip()
-		if self.data == '':
-			print("FILE EMPTY")
-			self.header = ["id"]
-			self.data = []
-			return 
-		self.data = self.data.split('\n')
-		while '' in self.data:
-			self.data.remove('')
-		# print(self.data)
-		self.header = self.data.pop(0)
-		self.header = ["id"] + self.header.split(',')
-		self.data = [x.split(',') for x in self.data]
-		self.data = [[str(x)]+self.data[x] for x in range(len(self.data))]
+		data = self.io.read().strip()
+		
+		if data == '':
+			# print("FILE EMPTY")
+			pass
+		else:
+			data = data.split('\n')
+			
+			while '' in data:
+				data.remove('')
+			# print(self.data)
+			
+			header = data.pop(0)
+			header = ["id"] + header.split(',')
+			data = [x.split(',') for x in data]
+			data = [[str(x)]+data[x] for x in range(len(data))]
+
+			self.data = data
+			self.header = header
+
+	def __init__(self,path=''):
+		self.header = ["id"]
+		self.data = []
+		self.openFile(path)
 
 
 
@@ -65,7 +45,7 @@ class File:
 		toPrint = self.headerToString()+'\n'+self.dataToString()+'\n'
 		# print(toPrint)
 		out = self.io.write(toPrint)
-		print("{} bytes was written.".format(bytes_2_human_readable(len(out)))) 
+		print("{} bytes was written.".format(dataToHumanReadable.bytes_2_human_readable(out))) 
 		return 0
 
 	def close(self):
@@ -151,6 +131,12 @@ class File:
 		else:
 			self.data.remove(self.data[index-1])
 			return 0
+
+	def reNameColumn(self,old,new):
+		if not (old in self.header):
+			return 1
+
+		self.header[self.header.index(old)] = new 
 
 if __name__=="__main__":
 	f = File("../data/test.csv")

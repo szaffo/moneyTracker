@@ -12,7 +12,9 @@ COMMAND_LIST = {
 	"rc": commands.removeColumn,
 	"lr": commands.listRows,
 	"ar": commands.addRow,
-	"rr": commands.removeRow
+	"rr": commands.removeRow,
+	"rnc": commands.reNameColumn,
+	"open": commands.open
 }
 
 
@@ -24,7 +26,7 @@ GLOBALS = {
 
 def init():
 	global GLOBALS
-	GLOBALS["FILE"] = classes.file.File(config.DEFAULT_FILE_PATH)
+	GLOBALS["FILE"] = classes.file.File()
 
 def destruct():
 	GLOBALS["FILE"].close()
